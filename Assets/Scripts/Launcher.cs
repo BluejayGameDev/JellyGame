@@ -25,6 +25,12 @@ public class Launcher : MonoBehaviour
 
     private bool isMouseDown;
 
+    public GameObject TrajectoryDot;
+    private GameObject[] TrajectoryDots;
+    public int number;
+
+    public CameraFollow cameraFollow;
+
 
     void Start()
     {
@@ -34,6 +40,14 @@ public class Launcher : MonoBehaviour
         lineRenderers[0].SetPosition(0, stripPositions[0].position);
         lineRenderers[1].SetPosition(0, stripPositions[1].position);
 
+        TrajectoryDots = new GameObject[number];
+
+        for (int i = 0; i < number; i++)
+        {
+            TrajectoryDots[i] = Instantiate(TrajectoryDot, transform);
+            TrajectoryDots[i].SetActive(false);
+        }
+
         CreateJelly();
     }
 
@@ -41,22 +55,15 @@ public class Launcher : MonoBehaviour
     void CreateJelly()
     {
         // Pick a random jelly from the array
-        GameObject selectedJelly =
-            JellyPrefabs[Random.Range(0, JellyPrefabs.Length)];
+        GameObject selectedJelly = JellyPrefabs[Random.Range(0, JellyPrefabs.Length)];
 
 
-        currentJelly = Instantiate(
-            selectedJelly,
-            idlePosition.position,
-            Quaternion.identity
-        );
+        currentJelly = Instantiate(selectedJelly, idlePosition.position, Quaternion.identity);
 
 
-        jellyBodies =
-            currentJelly.GetComponentsInChildren<Rigidbody2D>();
+        jellyBodies = currentJelly.GetComponentsInChildren<Rigidbody2D>();
 
-        jellyColliders =
-            currentJelly.GetComponentsInChildren<Collider2D>();
+        jellyColliders = currentJelly.GetComponentsInChildren<Collider2D>();
 
 
         // Disable physics while aiming
@@ -85,89 +92,66 @@ public class Launcher : MonoBehaviour
             mousePosition.z = 10;
 
 
-            currentPosition =
-                Camera.main.ScreenToWorldPoint(mousePosition);
+            currentPosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
 
-            currentPosition =
-                center.position +
-                Vector3.ClampMagnitude(
-                    currentPosition - center.position,
-                    maxLength
-                );
+            currentPosition = center.position + Vector3.ClampMagnitude(currentPosition - center.position, maxLength);
 
 
-            currentPosition =
-                ClampBoundary(currentPosition);
+            currentPosition = ClampBoundary(currentPosition);
 
 
             MoveJelly(currentPosition);
 
             SetStrips(currentPosition);
+
+            ShowTrajectory();
         }
         else
         {
             ResetStrips();
+
+            HideTrajectory();
         }
     }
 
 
     void MoveJelly(Vector3 position)
     {
-        Vector3 direction =
-            position - center.position;
+        Vector3 direction = position - center.position;
 
 
-        Vector3 targetPosition =
-            position + direction.normalized * jellyPositionOffset;
+        Vector3 targetPosition = position + direction.normalized * jellyPositionOffset;
 
 
-        currentJelly.transform.position =
-            targetPosition;
+        currentJelly.transform.position = targetPosition;
 
 
-        currentJelly.transform.rotation =
-            Quaternion.Euler(
-                0,
-                0,
-                -direction.x * 15f
-            );
+        currentJelly.transform.rotation = Quaternion.Euler(0, 0, -direction.x * 15f);
     }
 
 
     void Shoot()
     {
-        float pullDistance =
-            Vector2.Distance(
-                center.position,
-                currentPosition
-            );
+        HideTrajectory();
+
+        float pullDistance = Vector2.Distance(center.position, currentPosition);
 
 
-        float forcePercent =
-            Mathf.Clamp01(
-                pullDistance / maxLength
-            );
+        float forcePercent = Mathf.Clamp01(pullDistance / maxLength);
 
 
-        float launchForce =
-            Mathf.Lerp(
-                minForce,
-                maxForce,
-                forcePercent
-            );
+        float launchForce = Mathf.Lerp(minForce, maxForce, forcePercent);
 
 
-        Vector2 launchDirection =
-            (center.position - currentPosition).normalized;
+        Vector2 launchDirection = (center.position - currentPosition).normalized;
 
 
         foreach (Rigidbody2D rb in jellyBodies)
         {
             rb.simulated = true;
 
-            rb.linearVelocity =
-                launchDirection * launchForce;
+            rb.linearVelocity = launchDirection * launchForce;
         }
 
 
@@ -176,7 +160,10 @@ public class Launcher : MonoBehaviour
             col.enabled = true;
         }
 
+        cameraFollow.FollowJelly(jellyBodies);
 
+        Debug.Log("Following: " + currentJelly.name);
+        
         currentJelly = null;
         jellyBodies = null;
         jellyColliders = null;
@@ -202,12 +189,7 @@ public class Launcher : MonoBehaviour
 
     Vector3 ClampBoundary(Vector3 vector)
     {
-        vector.y =
-            Mathf.Clamp(
-                vector.y,
-                bottomBoundary,
-                1000
-            );
+        vector.y = Mathf.Clamp(vector.y, bottomBoundary, 1000);
 
         return vector;
     }
@@ -227,6 +209,41 @@ public class Launcher : MonoBehaviour
         if (currentJelly != null)
         {
             Shoot();
+        }
+    }
+
+    void ShowTrajectory()
+    {
+        if (currentJelly == null) return;
+
+        float pullDistance = Vector2.Distance(center.position, currentPosition);
+
+        float forcePercent = Mathf.Clamp01(pullDistance / maxLength);
+
+        float launchForce = Mathf.Lerp(minForce, maxForce, forcePercent);
+
+        Vector2 launchDirection = (center.position - currentPosition).normalized;
+
+        Vector2 velocity = launchDirection * launchForce;
+
+        Vector2 startPos = (Vector2)currentJelly.transform.position;
+
+        for (int i = 0; i < number; i++)
+        {
+            float t = i * 0.07f;
+
+            Vector2 point = startPos + velocity * t + 0.5f * Physics2D.gravity * (t * t);
+
+            TrajectoryDots[i].transform.position = point;
+            TrajectoryDots[i].SetActive(true);
+        }
+    }
+
+    void HideTrajectory()
+    {
+        for (int i = 0; i < number; i++)
+        {
+            TrajectoryDots[i].SetActive(false);
         }
     }
 }
