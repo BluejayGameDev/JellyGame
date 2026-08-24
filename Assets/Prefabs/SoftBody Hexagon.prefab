@@ -1146,6 +1146,7 @@ GameObject:
   - component: {fileID: 7887848430879178871}
   - component: {fileID: 1655776452835087002}
   - component: {fileID: 7194918654112507098}
+  - component: {fileID: 2245633528510596408}
   m_Layer: 0
   m_Name: SoftBody Hexagon
   m_TagString: Untagged
@@ -1289,6 +1290,19 @@ MonoBehaviour:
   stopSpeed: 0.2
   stopTime: 1
   destroyDelay: 15
+--- !u!114 &2245633528510596408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4177541966001703496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1188abdc0b152a41a4f80a0c6ffde4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JellyDamage
+  damage: 10
 --- !u!1 &4505159057283194764
 GameObject:
   m_ObjectHideFlags: 0

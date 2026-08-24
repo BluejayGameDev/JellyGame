@@ -498,6 +498,7 @@ GameObject:
   - component: {fileID: 5025834707952242015}
   - component: {fileID: 4135684926271322146}
   - component: {fileID: 5702785934883521096}
+  - component: {fileID: 5993118004722925184}
   m_Layer: 0
   m_Name: SoftBody Circle
   m_TagString: Untagged
@@ -633,6 +634,19 @@ MonoBehaviour:
   stopSpeed: 0.2
   stopTime: 1
   destroyDelay: 15
+--- !u!114 &5993118004722925184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2805134391141776629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1188abdc0b152a41a4f80a0c6ffde4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JellyDamage
+  damage: 10
 --- !u!1 &4315839932777806142
 GameObject:
   m_ObjectHideFlags: 0

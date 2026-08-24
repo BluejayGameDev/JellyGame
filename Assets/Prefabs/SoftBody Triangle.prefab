@@ -756,6 +756,7 @@ GameObject:
   - component: {fileID: 1764663954567832755}
   - component: {fileID: 3596766232111203187}
   - component: {fileID: 7411857707635852716}
+  - component: {fileID: 3288901286186560239}
   m_Layer: 0
   m_Name: SoftBody Triangle
   m_TagString: Untagged
@@ -887,6 +888,19 @@ MonoBehaviour:
   stopSpeed: 0.2
   stopTime: 1
   destroyDelay: 15
+--- !u!114 &3288901286186560239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4925071419118274062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1188abdc0b152a41a4f80a0c6ffde4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JellyDamage
+  damage: 5
 --- !u!1 &5305731941854935098
 GameObject:
   m_ObjectHideFlags: 0
