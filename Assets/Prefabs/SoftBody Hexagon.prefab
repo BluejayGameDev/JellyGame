@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7232018045455669432}
   - component: {fileID: 6158753233414891262}
   - component: {fileID: 9113086018069214300}
+  - component: {fileID: 804962151400917595}
   m_Layer: 0
   m_Name: bone_11
   m_TagString: Untagged
@@ -95,9 +96,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!231 &7232018045455669432
 SpringJoint2D:
@@ -162,6 +163,18 @@ SpringJoint2D:
   m_Distance: 0.005
   m_DampingRatio: 0.65
   m_Frequency: 8
+--- !u!114 &804962151400917595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511832287120583469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc8ab62e1f011c43a25dca3707b94c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JellyBone
 --- !u!1 &1271075944551254504
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,6 +189,7 @@ GameObject:
   - component: {fileID: 5285182244290144287}
   - component: {fileID: 8881870624505465803}
   - component: {fileID: 6241413927283581817}
+  - component: {fileID: 3421689857526083303}
   m_Layer: 0
   m_Name: bone_9
   m_TagString: Untagged
@@ -257,9 +271,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!231 &5285182244290144287
 SpringJoint2D:
@@ -324,6 +338,18 @@ SpringJoint2D:
   m_Distance: 0.005
   m_DampingRatio: 0.65
   m_Frequency: 8
+--- !u!114 &3421689857526083303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271075944551254504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc8ab62e1f011c43a25dca3707b94c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JellyBone
 --- !u!1 &1276702652315692514
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,6 +364,7 @@ GameObject:
   - component: {fileID: 3751459983805743564}
   - component: {fileID: 6364393849800570147}
   - component: {fileID: 5632245376765784764}
+  - component: {fileID: 7927199613031608031}
   m_Layer: 0
   m_Name: bone_10
   m_TagString: Untagged
@@ -419,9 +446,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!231 &3751459983805743564
 SpringJoint2D:
@@ -486,6 +513,18 @@ SpringJoint2D:
   m_Distance: 0.005
   m_DampingRatio: 0.65
   m_Frequency: 8
+--- !u!114 &7927199613031608031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276702652315692514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc8ab62e1f011c43a25dca3707b94c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JellyBone
 --- !u!1 &1527796746191755106
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,6 +539,7 @@ GameObject:
   - component: {fileID: 251386117669533659}
   - component: {fileID: 3560419395186356784}
   - component: {fileID: 2178178071116913561}
+  - component: {fileID: 851592246451971998}
   m_Layer: 0
   m_Name: bone_1
   m_TagString: Untagged
@@ -581,9 +621,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!231 &251386117669533659
 SpringJoint2D:
@@ -648,6 +688,18 @@ SpringJoint2D:
   m_Distance: 0.005
   m_DampingRatio: 0.65
   m_Frequency: 8
+--- !u!114 &851592246451971998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1527796746191755106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc8ab62e1f011c43a25dca3707b94c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JellyBone
 --- !u!1 &1768488389908349372
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,6 +714,7 @@ GameObject:
   - component: {fileID: 2718120088966528746}
   - component: {fileID: 3176442315917490212}
   - component: {fileID: 1225537609096041362}
+  - component: {fileID: 7867359736732274668}
   m_Layer: 0
   m_Name: bone_7
   m_TagString: Untagged
@@ -743,9 +796,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!231 &2718120088966528746
 SpringJoint2D:
@@ -810,6 +863,18 @@ SpringJoint2D:
   m_Distance: 0.005
   m_DampingRatio: 0.65
   m_Frequency: 8
+--- !u!114 &7867359736732274668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768488389908349372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc8ab62e1f011c43a25dca3707b94c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JellyBone
 --- !u!1 &2231625188599831766
 GameObject:
   m_ObjectHideFlags: 0
@@ -824,6 +889,7 @@ GameObject:
   - component: {fileID: 4980682128237684601}
   - component: {fileID: 3914393387317176673}
   - component: {fileID: 5801150744983233307}
+  - component: {fileID: 8520742225676208998}
   m_Layer: 0
   m_Name: bone_3
   m_TagString: Untagged
@@ -905,9 +971,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!231 &4980682128237684601
 SpringJoint2D:
@@ -972,6 +1038,18 @@ SpringJoint2D:
   m_Distance: 0.005
   m_DampingRatio: 0.65
   m_Frequency: 8
+--- !u!114 &8520742225676208998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2231625188599831766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc8ab62e1f011c43a25dca3707b94c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JellyBone
 --- !u!1 &3629322938092939890
 GameObject:
   m_ObjectHideFlags: 0
@@ -986,6 +1064,7 @@ GameObject:
   - component: {fileID: 2705247707442249011}
   - component: {fileID: 2804193642279287338}
   - component: {fileID: 6614730298164588807}
+  - component: {fileID: 1621143123769679335}
   m_Layer: 0
   m_Name: bone_2
   m_TagString: Untagged
@@ -1067,9 +1146,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!231 &2705247707442249011
 SpringJoint2D:
@@ -1134,6 +1213,18 @@ SpringJoint2D:
   m_Distance: 0.005
   m_DampingRatio: 0.65
   m_Frequency: 8
+--- !u!114 &1621143123769679335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3629322938092939890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc8ab62e1f011c43a25dca3707b94c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JellyBone
 --- !u!1 &4177541966001703496
 GameObject:
   m_ObjectHideFlags: 0
@@ -1302,7 +1393,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1188abdc0b152a41a4f80a0c6ffde4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JellyDamage
-  damage: 10
+  damage: 75
+  destroyDelay: 3
 --- !u!1 &4505159057283194764
 GameObject:
   m_ObjectHideFlags: 0
@@ -1317,6 +1409,7 @@ GameObject:
   - component: {fileID: 1730284661844687901}
   - component: {fileID: 792866490904590399}
   - component: {fileID: 7605171833458481541}
+  - component: {fileID: 2361436646448486353}
   m_Layer: 0
   m_Name: bone_6
   m_TagString: Untagged
@@ -1398,9 +1491,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!231 &1730284661844687901
 SpringJoint2D:
@@ -1465,6 +1558,18 @@ SpringJoint2D:
   m_Distance: 0.005
   m_DampingRatio: 0.65
   m_Frequency: 8
+--- !u!114 &2361436646448486353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4505159057283194764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc8ab62e1f011c43a25dca3707b94c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JellyBone
 --- !u!1 &4649559342023922246
 GameObject:
   m_ObjectHideFlags: 0
@@ -1479,6 +1584,7 @@ GameObject:
   - component: {fileID: 7841128792481704534}
   - component: {fileID: 4332878397114286553}
   - component: {fileID: 8361332249168894124}
+  - component: {fileID: 4440570830186632466}
   m_Layer: 0
   m_Name: bone_4
   m_TagString: Untagged
@@ -1560,9 +1666,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!231 &7841128792481704534
 SpringJoint2D:
@@ -1627,6 +1733,18 @@ SpringJoint2D:
   m_Distance: 0.005
   m_DampingRatio: 0.65
   m_Frequency: 8
+--- !u!114 &4440570830186632466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4649559342023922246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc8ab62e1f011c43a25dca3707b94c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JellyBone
 --- !u!1 &5979015153519259193
 GameObject:
   m_ObjectHideFlags: 0
@@ -1641,6 +1759,7 @@ GameObject:
   - component: {fileID: 4268197231432049551}
   - component: {fileID: 6060819646579727791}
   - component: {fileID: 341168183049426404}
+  - component: {fileID: 5835225874353565333}
   m_Layer: 0
   m_Name: bone_8
   m_TagString: Untagged
@@ -1722,9 +1841,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!231 &4268197231432049551
 SpringJoint2D:
@@ -1789,6 +1908,18 @@ SpringJoint2D:
   m_Distance: 0.005
   m_DampingRatio: 0.65
   m_Frequency: 8
+--- !u!114 &5835225874353565333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5979015153519259193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc8ab62e1f011c43a25dca3707b94c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JellyBone
 --- !u!1 &6141852511459196510
 GameObject:
   m_ObjectHideFlags: 0
@@ -1803,6 +1934,7 @@ GameObject:
   - component: {fileID: 5549782357430417423}
   - component: {fileID: 1457634549192347007}
   - component: {fileID: 2833033263458598555}
+  - component: {fileID: 2668155562638448944}
   m_Layer: 0
   m_Name: bone_12
   m_TagString: Untagged
@@ -1884,9 +2016,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!231 &5549782357430417423
 SpringJoint2D:
@@ -1951,6 +2083,18 @@ SpringJoint2D:
   m_Distance: 0.005
   m_DampingRatio: 0.65
   m_Frequency: 8
+--- !u!114 &2668155562638448944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6141852511459196510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc8ab62e1f011c43a25dca3707b94c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JellyBone
 --- !u!1 &6333138187136399436
 GameObject:
   m_ObjectHideFlags: 0
@@ -1965,6 +2109,7 @@ GameObject:
   - component: {fileID: 1673293384606240216}
   - component: {fileID: 4919096176385185728}
   - component: {fileID: 2547394277868812711}
+  - component: {fileID: 2091067554398576417}
   m_Layer: 0
   m_Name: bone_5
   m_TagString: Untagged
@@ -2046,9 +2191,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!231 &1673293384606240216
 SpringJoint2D:
@@ -2113,6 +2258,18 @@ SpringJoint2D:
   m_Distance: 0.005
   m_DampingRatio: 0.65
   m_Frequency: 8
+--- !u!114 &2091067554398576417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6333138187136399436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc8ab62e1f011c43a25dca3707b94c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JellyBone
 --- !u!1 &8745228418814732552
 GameObject:
   m_ObjectHideFlags: 0
@@ -2124,6 +2281,7 @@ GameObject:
   - component: {fileID: 562822758968811093}
   - component: {fileID: 2904348715653808108}
   - component: {fileID: 2827852873308199536}
+  - component: {fileID: 5878570643030624417}
   m_Layer: 0
   m_Name: bone_13
   m_TagString: Untagged
@@ -2205,7 +2363,19 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &5878570643030624417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8745228418814732552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc8ab62e1f011c43a25dca3707b94c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JellyBone

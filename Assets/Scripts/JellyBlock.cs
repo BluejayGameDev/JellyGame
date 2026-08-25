@@ -17,6 +17,14 @@ public class JellyBlock : MonoBehaviour
     [Header("Impact Settings")]
     [SerializeField] private float impactThreshold = 5f;
 
+    [Header("Fall Damage")]
+    [SerializeField] private float fallDamageThreshold = 3f;
+    [SerializeField] private float maxFallDamageVelocity = 12f;
+    [SerializeField] private float maxFallDamage = 40f;
+
+    [Header("Soft Body")]
+    [SerializeField] private bool activateSoftBodyOnImpact = true;
+
     private bool isJelly = false;
 
     private void Awake()
@@ -25,13 +33,11 @@ public class JellyBlock : MonoBehaviour
         // NORMAL BLOCK STATE
         // ============================================================
 
-        // Enable the normal BoxCollider
         if (normalCollider != null)
         {
             normalCollider.enabled = true;
         }
 
-        // Disable all jelly colliders
         foreach (CircleCollider2D collider in jellyColliders)
         {
             if (collider != null)
@@ -40,13 +46,13 @@ public class JellyBlock : MonoBehaviour
             }
         }
 
-        // Keep the main block standing upright
+        // Keep main block upright
         if (rb != null)
         {
-            rb.freezeRotation = true;
+            rb.freezeRotation = false;
         }
 
-        // Freeze all the jelly bones
+        // Keep jelly bones in their inactive state
         foreach (Rigidbody2D jellyRb in jellyRigidbodies)
         {
             if (jellyRb != null)
@@ -57,38 +63,73 @@ public class JellyBlock : MonoBehaviour
         }
     }
 
+
+    // ============================================================
+    // IMPACT DETECTION
+    // ============================================================
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Don't activate jelly more than once
-        if (isJelly)
-            return;
+        float impactForce =
+            collision.relativeVelocity.magnitude;
 
-        // Get the strength of the impact
-        float impactForce = collision.relativeVelocity.magnitude;
 
-        // Check if the impact was strong enough
-        if (impactForce >= impactThreshold)
+        // ========================================================
+        // ACTIVATE SOFT BODY
+        // ========================================================
+
+        if (!isJelly &&
+            activateSoftBodyOnImpact &&
+            impactForce >= impactThreshold)
         {
             ActivateJelly(collision.relativeVelocity);
         }
+
+
+        // ========================================================
+        // FALL / IMPACT DAMAGE
+        // ========================================================
+
+        if (impactForce >= fallDamageThreshold)
+        {
+            ApplyImpactDamage(impactForce);
+        }
     }
 
-    private void ActivateJelly(Vector2 impactVelocity)
+
+    // ============================================================
+    // ACTIVATE SOFT BODY
+    // ============================================================
+
+    public void ActivateJelly(Vector2 impactVelocity)
     {
+        // Don't activate twice
+        if (isJelly)
+            return;
+
+
         isJelly = true;
 
-        // ============================================================
+
+        Debug.Log(
+            gameObject.name +
+            " activated soft body!"
+        );
+
+
+        // ========================================================
         // DISABLE NORMAL BLOCK
-        // ============================================================
+        // ========================================================
 
         if (normalCollider != null)
         {
             normalCollider.enabled = false;
         }
 
-        // ============================================================
+
+        // ========================================================
         // ENABLE JELLY COLLIDERS
-        // ============================================================
+        // ========================================================
 
         foreach (CircleCollider2D collider in jellyColliders)
         {
@@ -98,22 +139,100 @@ public class JellyBlock : MonoBehaviour
             }
         }
 
-        // ============================================================
+
+        // ========================================================
         // ENABLE JELLY PHYSICS
-        // ============================================================
+        // ========================================================
 
         foreach (Rigidbody2D jellyRb in jellyRigidbodies)
         {
             if (jellyRb != null)
             {
-                jellyRb.bodyType = RigidbodyType2D.Dynamic;
+                jellyRb.bodyType =
+                    RigidbodyType2D.Dynamic;
             }
         }
 
-        // Allow the main Rigidbody to rotate
+
+        // ========================================================
+        // ALLOW MAIN BLOCK TO ROTATE
+        // ========================================================
+
         if (rb != null)
         {
             rb.freezeRotation = false;
         }
+    }
+
+
+    // ============================================================
+    // IMPACT DAMAGE
+    // ============================================================
+
+    private void ApplyImpactDamage(float impactVelocity)
+    {
+        BlockHealth health =
+            GetComponent<BlockHealth>();
+
+
+        if (health == null)
+            return;
+
+
+        // Don't damage the block from tiny impacts
+        if (impactVelocity < fallDamageThreshold)
+            return;
+
+
+        // Convert velocity into 0-1 range
+        float damagePercent =
+            Mathf.InverseLerp(
+                fallDamageThreshold,
+                maxFallDamageVelocity,
+                impactVelocity
+            );
+
+
+        float damage =
+            Mathf.Lerp(
+                0f,
+                maxFallDamage,
+                damagePercent
+            );
+
+
+        if (damage <= 0f)
+            return;
+
+
+        health.TakeDamage(damage);
+
+
+        Debug.Log(
+            gameObject.name +
+            " took " +
+            damage +
+            " impact damage!"
+        );
+    }
+
+
+    // ============================================================
+    // MANUAL ACTIVATION
+    // ============================================================
+
+    public void ForceActivateSoftBody()
+    {
+        ActivateJelly(Vector2.zero);
+    }
+
+
+    // ============================================================
+    // CHECK STATE
+    // ============================================================
+
+    public bool IsJellyActive()
+    {
+        return isJelly;
     }
 }
