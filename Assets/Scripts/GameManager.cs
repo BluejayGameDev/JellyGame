@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -45,10 +46,20 @@ public class GameManager : MonoBehaviour
 
 
     // ============================================================
+    // LEVEL COMPLETE UI
+    // ============================================================
+
+    [Header("Level Complete UI")]
+    [SerializeField]
+    private LevelCompleteUI levelCompleteUI;
+
+
+    // ============================================================
     // CURRENT LEVEL
     // ============================================================
 
     private LevelSettings currentLevel;
+
     private int currentLevelIndex = -1;
 
 
@@ -150,14 +161,17 @@ public class GameManager : MonoBehaviour
     {
         UpdateComboTimer();
 
+
         if (currentLevel == null)
         {
             FindActiveLevel();
             return;
         }
 
+
         if (levelWon)
             return;
+
 
         CheckLevelComplete();
     }
@@ -167,9 +181,10 @@ public class GameManager : MonoBehaviour
     // FIND ACTIVE LEVEL
     // ============================================================
 
-    void FindActiveLevel()
+    private void FindActiveLevel()
     {
-        if (levels == null || levels.Length == 0)
+        if (levels == null ||
+            levels.Length == 0)
         {
             Debug.LogWarning(
                 "GameManager has no levels assigned!"
@@ -180,6 +195,7 @@ public class GameManager : MonoBehaviour
 
 
         int activeLevelCount = 0;
+
         int foundIndex = -1;
 
 
@@ -187,12 +203,15 @@ public class GameManager : MonoBehaviour
         {
             if (levels[i] == null ||
                 levels[i].levelObject == null)
+            {
                 continue;
+            }
 
 
             if (levels[i].levelObject.activeSelf)
             {
                 activeLevelCount++;
+
                 foundIndex = i;
             }
         }
@@ -227,11 +246,13 @@ public class GameManager : MonoBehaviour
     // SETUP LEVEL
     // ============================================================
 
-    void SetupLevel(int index)
+    private void SetupLevel(int index)
     {
         if (index < 0 ||
             index >= levels.Length)
+        {
             return;
+        }
 
 
         currentLevel =
@@ -241,11 +262,30 @@ public class GameManager : MonoBehaviour
             index;
 
 
+        // ========================================================
+        // RESET SCORE
+        // ========================================================
+
         score = 0;
+
+
+        // ========================================================
+        // RESET JELLIES
+        // ========================================================
 
         jelliesUsed = 0;
 
+
+        // ========================================================
+        // RESET BLOCKS
+        // ========================================================
+
         blocksDestroyed = 0;
+
+
+        // ========================================================
+        // RESET COMBO
+        // ========================================================
 
         currentCombo = 0;
 
@@ -253,8 +293,17 @@ public class GameManager : MonoBehaviour
 
         comboTimer = 0f;
 
+
+        // ========================================================
+        // RESET LEVEL STATE
+        // ========================================================
+
         levelWon = false;
 
+
+        // ========================================================
+        // SET JELLY COUNT
+        // ========================================================
 
         if (currentLevel.infiniteJellies)
         {
@@ -292,6 +341,7 @@ public class GameManager : MonoBehaviour
             );
         }
 
+
         Debug.Log(
             "===================================="
         );
@@ -304,29 +354,56 @@ public class GameManager : MonoBehaviour
 
     public bool UseJelly()
     {
+        // If level has already finished,
+        // don't allow another jelly to be used.
+
+        if (levelWon)
+        {
+            return false;
+        }
+
+
+        // ========================================================
+        // INFINITE JELLIES
+        // ========================================================
+
         if (currentLevel != null &&
             currentLevel.infiniteJellies)
         {
             jelliesUsed++;
+
 
             Debug.Log(
                 "Jelly used: " +
                 jelliesUsed
             );
 
+
             return true;
         }
 
 
+        // ========================================================
+        // NO JELLIES
+        // ========================================================
+
         if (jelliesRemaining <= 0)
         {
             Debug.Log(
-                "NO JELLIES REMAINING!"
+                "NO JELLIES REMAINING! SHOWING LEVEL COMPLETE."
             );
+
+
+            ShowLevelCompletePopup();
+
 
             return false;
         }
 
+
+        // ========================================================
+        // USE JELLY
+        // ========================================================
 
         jelliesUsed++;
 
@@ -408,7 +485,7 @@ public class GameManager : MonoBehaviour
 
 
         // ========================================================
-        // FINAL POINTS
+        // TOTAL POINTS
         // ========================================================
 
         int totalPoints =
@@ -455,7 +532,7 @@ public class GameManager : MonoBehaviour
     // COMBO TIMER
     // ============================================================
 
-    void UpdateComboTimer()
+    private void UpdateComboTimer()
     {
         if (comboTimer <= 0f)
             return;
@@ -469,6 +546,7 @@ public class GameManager : MonoBehaviour
         {
             comboTimer = 0f;
 
+
             if (currentCombo > 1)
             {
                 Debug.Log(
@@ -476,6 +554,7 @@ public class GameManager : MonoBehaviour
                     currentCombo
                 );
             }
+
 
             currentCombo = 0;
         }
@@ -486,11 +565,13 @@ public class GameManager : MonoBehaviour
     // CHECK LEVEL COMPLETE
     // ============================================================
 
-    void CheckLevelComplete()
+    private void CheckLevelComplete()
     {
         if (currentLevel == null ||
             currentLevel.levelObject == null)
+        {
             return;
+        }
 
 
         BlockHealth[] obstacles =
@@ -501,6 +582,7 @@ public class GameManager : MonoBehaviour
         if (obstacles.Length == 0)
         {
             WinLevel();
+
             return;
         }
 
@@ -528,7 +610,7 @@ public class GameManager : MonoBehaviour
     // WIN LEVEL
     // ============================================================
 
-    void WinLevel()
+    private void WinLevel()
     {
         if (levelWon)
             return;
@@ -537,10 +619,15 @@ public class GameManager : MonoBehaviour
         levelWon = true;
 
 
+        // ========================================================
+        // UNUSED JELLY BONUS
+        // ========================================================
+
         int jellyBonus = 0;
 
 
-        if (!currentLevel.infiniteJellies)
+        if (currentLevel != null &&
+            !currentLevel.infiniteJellies)
         {
             jellyBonus =
                 jelliesRemaining *
@@ -552,16 +639,24 @@ public class GameManager : MonoBehaviour
         }
 
 
+        // ========================================================
+        // STARS
+        // ========================================================
+
         int stars =
             CalculateStars();
 
+
+        // ========================================================
+        // DEBUG
+        // ========================================================
 
         Debug.Log(
             "===================================="
         );
 
         Debug.Log(
-            "             GAME WON!"
+            "          LEVEL COMPLETE!"
         );
 
         Debug.Log(
@@ -622,6 +717,158 @@ public class GameManager : MonoBehaviour
         Debug.Log(
             "===================================="
         );
+
+
+        // ========================================================
+        // SHOW POPUP
+        // ========================================================
+
+        if (levelCompleteUI != null)
+        {
+            levelCompleteUI.ShowResults(
+                score,
+                stars,
+                blocksDestroyed,
+                jelliesUsed,
+                jelliesRemaining,
+                jellyBonus,
+                highestCombo,
+                currentLevel.infiniteJellies
+            );
+        }
+        else
+        {
+            Debug.LogError(
+                "GameManager: Level Complete UI is NOT assigned!"
+            );
+        }
+    }
+
+
+    // ============================================================
+    // SHOW LEVEL COMPLETE POPUP
+    // ============================================================
+
+    private void ShowLevelCompletePopup()
+    {
+        if (levelWon)
+            return;
+
+
+        levelWon = true;
+
+
+        // ========================================================
+        // UNUSED JELLY BONUS
+        // ========================================================
+
+        int jellyBonus = 0;
+
+
+        if (currentLevel != null &&
+            !currentLevel.infiniteJellies)
+        {
+            jellyBonus =
+                jelliesRemaining *
+                currentLevel.unusedJellyBonus;
+
+
+            score +=
+                jellyBonus;
+        }
+
+
+        // ========================================================
+        // STARS
+        // ========================================================
+
+        int stars =
+            CalculateStars();
+
+
+        // ========================================================
+        // DEBUG
+        // ========================================================
+
+        Debug.Log(
+            "===================================="
+        );
+
+        Debug.Log(
+            "       OUT OF JELLIES!"
+        );
+
+        Debug.Log(
+            "       SHOWING RESULTS"
+        );
+
+        Debug.Log(
+            "===================================="
+        );
+
+        Debug.Log(
+            "Final Score: " +
+            score
+        );
+
+        Debug.Log(
+            "Stars: " +
+            stars
+        );
+
+        Debug.Log(
+            "Blocks Destroyed: " +
+            blocksDestroyed
+        );
+
+        Debug.Log(
+            "Jellies Used: " +
+            jelliesUsed
+        );
+
+        Debug.Log(
+            "Jellies Remaining: " +
+            jelliesRemaining
+        );
+
+        Debug.Log(
+            "Unused Jelly Bonus: +" +
+            jellyBonus
+        );
+
+        Debug.Log(
+            "Highest Combo: x" +
+            highestCombo
+        );
+
+        Debug.Log(
+            "===================================="
+        );
+
+
+        // ========================================================
+        // SHOW UI
+        // ========================================================
+
+        if (levelCompleteUI != null)
+        {
+            levelCompleteUI.ShowResults(
+                score,
+                stars,
+                blocksDestroyed,
+                jelliesUsed,
+                jelliesRemaining,
+                jellyBonus,
+                highestCombo,
+                currentLevel.infiniteJellies
+            );
+        }
+        else
+        {
+            Debug.LogError(
+                "GameManager: Level Complete UI is NOT assigned!"
+            );
+        }
     }
 
 
@@ -629,7 +876,7 @@ public class GameManager : MonoBehaviour
     // STARS
     // ============================================================
 
-    int CalculateStars()
+    private int CalculateStars()
     {
         if (currentLevel == null)
             return 0;
@@ -697,6 +944,16 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public int GetLevelCount()
+    {
+        if (levels == null)
+            return 0;
+
+
+        return levels.Length;
+    }
+
+
     // ============================================================
     // LOAD LEVEL
     // ============================================================
@@ -725,6 +982,8 @@ public class GameManager : MonoBehaviour
         }
 
 
+        // Hide all levels
+
         for (int i = 0; i < levels.Length; i++)
         {
             if (levels[i] != null &&
@@ -735,10 +994,18 @@ public class GameManager : MonoBehaviour
         }
 
 
-        levels[levelIndex]
-            .levelObject
-            .SetActive(true);
+        // Activate selected level
 
+        if (levels[levelIndex] != null &&
+            levels[levelIndex].levelObject != null)
+        {
+            levels[levelIndex]
+                .levelObject
+                .SetActive(true);
+        }
+
+
+        // Setup
 
         SetupLevel(levelIndex);
     }
@@ -754,7 +1021,8 @@ public class GameManager : MonoBehaviour
             currentLevelIndex + 1;
 
 
-        if (nextLevel >= levels.Length)
+        if (levels == null ||
+            nextLevel >= levels.Length)
         {
             Debug.Log(
                 "NO MORE LEVELS!"
@@ -793,15 +1061,28 @@ public class GameManager : MonoBehaviour
 
 
     // ============================================================
-    // RESTART
+    // RESTART LEVEL
     // ============================================================
 
     public void RestartLevel()
     {
-        if (currentLevelIndex < 0)
-            return;
+        Debug.Log(
+            "RESTARTING LEVEL..."
+        );
 
 
-        LoadLevel(currentLevelIndex);
+        // Reload the entire scene.
+        //
+        // This resets:
+        // Score
+        // Jellies
+        // Destroyed blocks
+        // Launcher
+        // Combo
+        // Level complete popup
+
+        SceneManager.LoadScene(
+            SceneManager.GetActiveScene().buildIndex
+        );
     }
 }

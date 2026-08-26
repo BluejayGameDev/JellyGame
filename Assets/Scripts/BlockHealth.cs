@@ -74,15 +74,6 @@ public class BlockHealth : MonoBehaviour
             damage;
 
 
-        Debug.Log(
-            gameObject.name +
-            " took " +
-            damage +
-            " damage. Health: " +
-            currentHealth
-        );
-
-
         if (currentHealth <= 0f)
         {
             Die();

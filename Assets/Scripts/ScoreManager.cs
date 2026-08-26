@@ -21,7 +21,12 @@ public class ScoreManager : MonoBehaviour
     {
         Score += amount;
 
-        Debug.Log("Score +" + amount + " | Total Score: " + Score);
+        Debug.Log(
+            "Score +" +
+            amount +
+            " | Total Score: " +
+            Score
+        );
     }
 
     public void ResetScore()
