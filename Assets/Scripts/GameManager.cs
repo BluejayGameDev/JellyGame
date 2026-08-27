@@ -3,10 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    // ============================================================
-    // SINGLETON
-    // ============================================================
-
     public static GameManager Instance { get; private set; }
 
 
@@ -105,6 +101,16 @@ public class GameManager : MonoBehaviour
     private int highestCombo = 0;
 
 
+    // These store the most recent scoring information
+    // so the UI can display it.
+
+    [SerializeField]
+    private int lastBaseScore = 0;
+
+    [SerializeField]
+    private int lastComboBonus = 0;
+
+
     // ============================================================
     // COMBO SETTINGS
     // ============================================================
@@ -159,9 +165,12 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        // Update combo timer
         UpdateComboTimer();
 
 
+        // If we don't have an active level yet,
+        // try to find one.
         if (currentLevel == null)
         {
             FindActiveLevel();
@@ -169,10 +178,12 @@ public class GameManager : MonoBehaviour
         }
 
 
+        // Don't keep checking once the level has finished.
         if (levelWon)
             return;
 
 
+        // Check whether all destructible objects are gone.
         CheckLevelComplete();
     }
 
@@ -291,11 +302,15 @@ public class GameManager : MonoBehaviour
 
         highestCombo = 0;
 
+        lastBaseScore = 0;
+
+        lastComboBonus = 0;
+
         comboTimer = 0f;
 
 
         // ========================================================
-        // RESET LEVEL STATE
+        // RESET GAME STATE
         // ========================================================
 
         levelWon = false;
@@ -316,16 +331,9 @@ public class GameManager : MonoBehaviour
         }
 
 
-        Debug.Log(
-            "===================================="
-        );
-
-        Debug.Log(
-            "LEVEL " +
-            (currentLevelIndex + 1) +
-            " STARTED"
-        );
-
+        // ========================================================
+        // DEBUG
+        // ========================================================
 
         if (currentLevel.infiniteJellies)
         {
@@ -340,11 +348,6 @@ public class GameManager : MonoBehaviour
                 jelliesRemaining
             );
         }
-
-
-        Debug.Log(
-            "===================================="
-        );
     }
 
 
@@ -354,9 +357,6 @@ public class GameManager : MonoBehaviour
 
     public bool UseJelly()
     {
-        // If level has already finished,
-        // don't allow another jelly to be used.
-
         if (levelWon)
         {
             return false;
@@ -371,13 +371,6 @@ public class GameManager : MonoBehaviour
             currentLevel.infiniteJellies)
         {
             jelliesUsed++;
-
-
-            Debug.Log(
-                "Jelly used: " +
-                jelliesUsed
-            );
-
 
             return true;
         }
@@ -430,6 +423,10 @@ public class GameManager : MonoBehaviour
             return;
 
 
+        // ========================================================
+        // INCREASE BLOCK COUNT
+        // ========================================================
+
         blocksDestroyed++;
 
 
@@ -447,10 +444,12 @@ public class GameManager : MonoBehaviour
         }
 
 
+        // Reset combo timer
         comboTimer =
             comboTime;
 
 
+        // Update highest combo
         if (currentCombo > highestCombo)
         {
             highestCombo =
@@ -482,6 +481,16 @@ public class GameManager : MonoBehaviour
                     (currentCombo - 1)
                 );
         }
+
+
+        // Store the latest scoring values
+        // for the UI.
+
+        lastBaseScore =
+            baseScore;
+
+        lastComboBonus =
+            comboBonus;
 
 
         // ========================================================
@@ -574,18 +583,35 @@ public class GameManager : MonoBehaviour
         }
 
 
+        // Find every BlockHealth object inside
+        // the currently active level.
+
         BlockHealth[] obstacles =
             currentLevel.levelObject
                 .GetComponentsInChildren<BlockHealth>(true);
 
 
+        // ========================================================
+        // NO BLOCKS LEFT
+        // ========================================================
+
         if (obstacles.Length == 0)
         {
+            Debug.Log(
+                "ALL OBJECTS DESTROYED! LEVEL COMPLETE!"
+            );
+
+
             WinLevel();
+
 
             return;
         }
 
+
+        // ========================================================
+        // COUNT REMAINING BLOCKS
+        // ========================================================
 
         int remaining = 0;
 
@@ -599,8 +625,17 @@ public class GameManager : MonoBehaviour
         }
 
 
+        // ========================================================
+        // ALL BLOCKS DESTROYED
+        // ========================================================
+
         if (remaining == 0)
         {
+            Debug.Log(
+                "ALL OBJECTS DESTROYED! LEVEL COMPLETE!"
+            );
+
+
             WinLevel();
         }
     }
@@ -938,6 +973,24 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public int GetLastBaseScore()
+    {
+        return lastBaseScore;
+    }
+
+
+    public int GetLastComboBonus()
+    {
+        return lastComboBonus;
+    }
+
+
+    public float GetComboBonusPerStep()
+    {
+        return comboBonusPerStep;
+    }
+
+
     public int GetCurrentLevel()
     {
         return currentLevelIndex;
@@ -982,19 +1035,25 @@ public class GameManager : MonoBehaviour
         }
 
 
-        // Hide all levels
+        // ========================================================
+        // HIDE ALL LEVELS
+        // ========================================================
 
         for (int i = 0; i < levels.Length; i++)
         {
             if (levels[i] != null &&
                 levels[i].levelObject != null)
             {
-                levels[i].levelObject.SetActive(false);
+                levels[i]
+                    .levelObject
+                    .SetActive(false);
             }
         }
 
 
-        // Activate selected level
+        // ========================================================
+        // ACTIVATE SELECTED LEVEL
+        // ========================================================
 
         if (levels[levelIndex] != null &&
             levels[levelIndex].levelObject != null)
@@ -1005,7 +1064,9 @@ public class GameManager : MonoBehaviour
         }
 
 
-        // Setup
+        // ========================================================
+        // SETUP
+        // ========================================================
 
         SetupLevel(levelIndex);
     }

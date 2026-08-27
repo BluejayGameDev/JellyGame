@@ -47,12 +47,9 @@ public class BlockHealth : MonoBehaviour
 
     private void Awake()
     {
-        currentHealth =
-            maxHealth;
+        currentHealth = maxHealth;
 
-
-        jellyBlock =
-            GetComponent<JellyBlock>();
+        jellyBlock = GetComponent<JellyBlock>();
     }
 
 
@@ -65,13 +62,11 @@ public class BlockHealth : MonoBehaviour
         if (destroyed)
             return;
 
-
         if (damage <= 0f)
             return;
 
 
-        currentHealth -=
-            damage;
+        currentHealth -= damage;
 
 
         if (currentHealth <= 0f)
@@ -125,6 +120,7 @@ public class BlockHealth : MonoBehaviour
 
             // Keep the soft body alive long enough
             // to hit other blocks.
+
             Destroy(
                 gameObject,
                 destroyedSoftBodyTime
@@ -134,6 +130,7 @@ public class BlockHealth : MonoBehaviour
         {
             // If there is no soft body,
             // destroy normally.
+
             Destroy(
                 gameObject,
                 0.05f

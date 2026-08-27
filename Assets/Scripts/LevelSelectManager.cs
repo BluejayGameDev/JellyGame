@@ -18,16 +18,6 @@ public class LevelSelectManager : MonoBehaviour
         SelectLevel(2);
     }
 
-    public void SelectLevel3()
-    {
-        SelectLevel(3);
-    }
-
-    public void SelectLevel4()
-    {
-        SelectLevel(4);
-    }
-
     private void SelectLevel(int level)
     {
         SelectedLevel = level;

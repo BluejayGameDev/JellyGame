@@ -179,7 +179,7 @@ public class LevelCompleteUI : MonoBehaviour
                 case 3:
 
                     starsText.text =
-                        "★★★";
+                        "***";
 
                     break;
 
@@ -187,7 +187,7 @@ public class LevelCompleteUI : MonoBehaviour
                 case 2:
 
                     starsText.text =
-                        "★★☆";
+                        "**";
 
                     break;
 
@@ -195,7 +195,7 @@ public class LevelCompleteUI : MonoBehaviour
                 case 1:
 
                     starsText.text =
-                        "★☆☆";
+                        "*";
 
                     break;
 
@@ -203,7 +203,7 @@ public class LevelCompleteUI : MonoBehaviour
                 default:
 
                     starsText.text =
-                        "☆☆☆";
+                        "";
 
                     break;
             }

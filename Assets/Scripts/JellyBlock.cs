@@ -153,15 +153,6 @@ public class JellyBlock : MonoBehaviour
             }
         }
 
-
-        // ========================================================
-        // ALLOW MAIN BLOCK TO ROTATE
-        // ========================================================
-
-        if (rb != null)
-        {
-            rb.freezeRotation = false;
-        }
     }
 
 
@@ -206,14 +197,6 @@ public class JellyBlock : MonoBehaviour
 
 
         health.TakeDamage(damage);
-
-
-        Debug.Log(
-            gameObject.name +
-            " took " +
-            damage +
-            " impact damage!"
-        );
     }
 
 
@@ -221,10 +204,10 @@ public class JellyBlock : MonoBehaviour
     // MANUAL ACTIVATION
     // ============================================================
 
-    public void ForceActivateSoftBody()
-    {
-        ActivateJelly(Vector2.zero);
-    }
+   // public void ForceActivateSoftBody()
+    //{
+        //ActivateJelly(Vector2.zero);
+    //}
 
 
     // ============================================================

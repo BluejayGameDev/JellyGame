@@ -5,8 +5,6 @@ public class GameLevelManager : MonoBehaviour
     [Header("Levels")]
     [SerializeField] private GameObject level1;
     [SerializeField] private GameObject level2;
-    [SerializeField] private GameObject level3;
-    [SerializeField] private GameObject level4;
 
     private void Start()
     {
@@ -18,8 +16,6 @@ public class GameLevelManager : MonoBehaviour
         // Turn ALL levels off first
         level1.SetActive(false);
         level2.SetActive(false);
-        level3.SetActive(false);
-        level4.SetActive(false);
 
         // Activate the selected level
         switch (LevelSelectManager.SelectedLevel)
@@ -30,14 +26,6 @@ public class GameLevelManager : MonoBehaviour
 
             case 2:
                 level2.SetActive(true);
-                break;
-
-            case 3:
-                level3.SetActive(true);
-                break;
-
-            case 4:
-                level4.SetActive(true);
                 break;
 
             default:
