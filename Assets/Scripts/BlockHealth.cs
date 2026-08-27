@@ -34,12 +34,9 @@ public class BlockHealth : MonoBehaviour
     // ============================================================
 
     [Header("Destroyed Soft Body")]
-
-    [Tooltip("How long the destroyed block remains as a soft body.")]
     public float destroyedSoftBodyTime = 1.5f;
 
     private JellyBlock jellyBlock;
-
 
     // ============================================================
     // AWAKE
@@ -59,15 +56,11 @@ public class BlockHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        if (destroyed)
-            return;
+        if (destroyed) return;
 
-        if (damage <= 0f)
-            return;
-
+        if (damage <= 0f) return;
 
         currentHealth -= damage;
-
 
         if (currentHealth <= 0f)
         {
@@ -82,18 +75,9 @@ public class BlockHealth : MonoBehaviour
 
     private void Die()
     {
-        if (destroyed)
-            return;
-
+        if (destroyed) return;
 
         destroyed = true;
-
-
-        Debug.Log(
-            gameObject.name +
-            " destroyed!"
-        );
-
 
         // ========================================================
         // SCORE
@@ -101,9 +85,7 @@ public class BlockHealth : MonoBehaviour
 
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.BlockDestroyed(
-                scoreValue
-            );
+            GameManager.Instance.BlockDestroyed(scoreValue);
         }
 
 
@@ -113,28 +95,14 @@ public class BlockHealth : MonoBehaviour
 
         if (jellyBlock != null)
         {
-            jellyBlock.ActivateJelly(
-                Vector2.zero
-            );
+            jellyBlock.ActivateJelly(Vector2.zero);
 
 
-            // Keep the soft body alive long enough
-            // to hit other blocks.
-
-            Destroy(
-                gameObject,
-                destroyedSoftBodyTime
-            );
+            Destroy(gameObject, destroyedSoftBodyTime);
         }
         else
         {
-            // If there is no soft body,
-            // destroy normally.
-
-            Destroy(
-                gameObject,
-                0.05f
-            );
+            Destroy(gameObject, 0.05f);
         }
     }
 

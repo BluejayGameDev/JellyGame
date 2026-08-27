@@ -49,27 +49,9 @@ public class BlockBone : MonoBehaviour
 
     private void Awake()
     {
-        blockHealth =
-            GetComponentInParent<BlockHealth>();
+        blockHealth = GetComponentInParent<BlockHealth>();
 
-        jellyBlock =
-            GetComponentInParent<JellyBlock>();
-
-
-        if (blockHealth == null)
-        {
-            Debug.LogWarning(
-                "BlockBone could not find BlockHealth!"
-            );
-        }
-
-
-        if (jellyBlock == null)
-        {
-            Debug.LogWarning(
-                "BlockBone could not find JellyBlock!"
-            );
-        }
+        jellyBlock = GetComponentInParent<JellyBlock>();
     }
 
 
@@ -77,34 +59,23 @@ public class BlockBone : MonoBehaviour
     // COLLISION
     // ============================================================
 
-    private void OnCollisionEnter2D(
-        Collision2D collision
-    )
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (blockHealth == null)
-            return;
+        if (blockHealth == null) return;
+
+        if (blockHealth.IsDestroyed()) return;
 
 
-        if (blockHealth.IsDestroyed())
-            return;
-
-
-        float impactVelocity =
-            collision.relativeVelocity.magnitude;
+        float impactVelocity = collision.relativeVelocity.magnitude;
 
 
         // ========================================================
         // ACTIVATE THIS BLOCK'S SOFT BODY
         // ========================================================
 
-        if (
-            jellyBlock != null &&
-            impactVelocity >= softBodyImpactVelocity
-        )
+        if (jellyBlock != null && impactVelocity >= softBodyImpactVelocity)
         {
-            jellyBlock.ActivateJelly(
-                collision.relativeVelocity
-            );
+            jellyBlock.ActivateJelly(collision.relativeVelocity);
         }
 
 
@@ -112,13 +83,11 @@ public class BlockBone : MonoBehaviour
         // JELLY
         // ========================================================
 
-        JellyBone jellyBone =
-            collision.collider.GetComponent<JellyBone>();
+        JellyBone jellyBone = collision.collider.GetComponent<JellyBone>();
 
 
         if (jellyBone != null)
         {
-            // JellyDamage handles this.
             return;
         }
 
@@ -127,46 +96,31 @@ public class BlockBone : MonoBehaviour
         // FIND OTHER BLOCK
         // ========================================================
 
-        BlockBone otherBlockBone =
-            collision.collider.GetComponent<BlockBone>();
+        BlockBone otherBlockBone = collision.collider.GetComponent<BlockBone>();
 
 
-        if (otherBlockBone == null)
-            return;
+        if (otherBlockBone == null) return;
 
 
-        BlockHealth otherBlock =
-            otherBlockBone.GetBlockHealth();
+        BlockHealth otherBlock = otherBlockBone.GetBlockHealth();
 
 
-        if (otherBlock == null)
-            return;
+        if (otherBlock == null) return;
 
 
-        if (otherBlock == blockHealth)
-            return;
+        if (otherBlock == blockHealth) return;
 
 
         // ========================================================
         // DAMAGE THE BLOCK THAT WAS HIT
         // ========================================================
 
-        if (
-            impactVelocity <
-            minimumImpactVelocity
-        )
+        if (impactVelocity < minimumImpactVelocity)
         {
             return;
         }
 
-
-        // The collision happened on THIS block's bone.
-        //
-        // We want the OTHER block to take the damage.
-
-        otherBlockBone.ApplyImpactDamage(
-            impactVelocity
-        );
+        otherBlockBone.ApplyImpactDamage(impactVelocity);
     }
 
 
@@ -174,75 +128,40 @@ public class BlockBone : MonoBehaviour
     // APPLY IMPACT DAMAGE
     // ============================================================
 
-    public void ApplyImpactDamage(
-        float impactVelocity
-    )
+    public void ApplyImpactDamage(float impactVelocity)
     {
-        if (blockHealth == null)
-            return;
+        if (blockHealth == null) return;
 
 
-        if (blockHealth.IsDestroyed())
-            return;
-
+        if (blockHealth.IsDestroyed()) return;
 
         // ========================================================
         // COOLDOWN
         // ========================================================
 
-        if (
-            Time.time -
-            lastDamageTime <
-            damageCooldown
-        )
+        if (Time.time - lastDamageTime < damageCooldown)
         {
             return;
         }
 
-
-        lastDamageTime =
-            Time.time;
+        lastDamageTime = Time.time;
 
 
         // ========================================================
         // DAMAGE CALCULATION
         // ========================================================
 
-        float velocityPercent =
-            Mathf.InverseLerp(
-                minimumImpactVelocity,
-                maximumImpactVelocity,
-                impactVelocity
-            );
+        float velocityPercent = Mathf.InverseLerp(minimumImpactVelocity, maximumImpactVelocity, impactVelocity);
 
+        float damage = Mathf.Lerp(0f, maximumImpactDamage, velocityPercent);
 
-        float damage =
-            Mathf.Lerp(
-                0f,
-                maximumImpactDamage,
-                velocityPercent
-            );
-
-
-        if (damage <= 0f)
-            return;
-
+        if (damage <= 0f) return;
 
         // ========================================================
         // DAMAGE
         // ========================================================
 
-        blockHealth.TakeDamage(
-            damage
-        );
-
-
-        Debug.Log(
-            gameObject.name +
-            " received " +
-            damage +
-            " impact damage."
-        );
+        blockHealth.TakeDamage(damage);
     }
 
 
