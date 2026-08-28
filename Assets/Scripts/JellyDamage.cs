@@ -26,9 +26,7 @@ public class JellyDamage : MonoBehaviour
     // DAMAGED BLOCKS
     // ============================================================
 
-    private HashSet<BlockHealth> damagedBlocks =
-        new HashSet<BlockHealth>();
-
+    private HashSet<BlockHealth> damagedBlocks = new HashSet<BlockHealth>();
 
     // ============================================================
     // STATE
@@ -45,15 +43,12 @@ public class JellyDamage : MonoBehaviour
 
     public void TryDamageBlock(BlockHealth block)
     {
-        if (block == null)
-            return;
+        if (block == null) return;
 
-        if (block.IsDestroyed())
-            return;
+        if (block.IsDestroyed()) return;
 
         // This jelly has already damaged this block
-        if (damagedBlocks.Contains(block))
-            return;
+        if (damagedBlocks.Contains(block)) return;
 
 
         // ========================================================
@@ -69,8 +64,7 @@ public class JellyDamage : MonoBehaviour
         // ACTIVATE BLOCK SOFT BODY
         // ========================================================
 
-        JellyBlock jellyBlock =
-            block.GetComponent<JellyBlock>();
+        JellyBlock jellyBlock = block.GetComponent<JellyBlock>();
 
         if (jellyBlock != null)
         {
@@ -86,13 +80,7 @@ public class JellyDamage : MonoBehaviour
         {
             hasHitBlock = true;
 
-            Debug.Log(
-                "Jelly hit first block!"
-            );
-
-            StartCoroutine(
-                DestroyJellyAfterDelay()
-            );
+            StartCoroutine(DestroyJellyAfterDelay());
         }
     }
 
@@ -117,12 +105,6 @@ public class JellyDamage : MonoBehaviour
 
         if (gameObject != null)
         {
-            Debug.Log(
-                "Destroying jelly after " +
-                destroyDelay +
-                " seconds."
-            );
-
             Destroy(gameObject);
         }
     }

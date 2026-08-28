@@ -396,7 +396,7 @@ public class CameraFollow : MonoBehaviour
         {
             elapsed += Time.deltaTime * levelViewSpeed;
 
-            float t =Mathf.SmoothStep(0f, 1f, elapsed);
+            float t = Mathf.SmoothStep(0f, 1f, elapsed);
 
 
             transform.position = Vector3.Lerp(startPosition, targetPosition, t);

@@ -46,13 +46,6 @@ public class JellyBlock : MonoBehaviour
             }
         }
 
-        // Keep main block upright
-        if (rb != null)
-        {
-            rb.freezeRotation = false;
-        }
-
-        // Keep jelly bones in their inactive state
         foreach (Rigidbody2D jellyRb in jellyRigidbodies)
         {
             if (jellyRb != null)
@@ -70,17 +63,14 @@ public class JellyBlock : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        float impactForce =
-            collision.relativeVelocity.magnitude;
+        float impactForce = collision.relativeVelocity.magnitude;
 
 
         // ========================================================
         // ACTIVATE SOFT BODY
         // ========================================================
 
-        if (!isJelly &&
-            activateSoftBodyOnImpact &&
-            impactForce >= impactThreshold)
+        if (!isJelly && activateSoftBodyOnImpact && impactForce >= impactThreshold)
         {
             ActivateJelly(collision.relativeVelocity);
         }
@@ -104,17 +94,10 @@ public class JellyBlock : MonoBehaviour
     public void ActivateJelly(Vector2 impactVelocity)
     {
         // Don't activate twice
-        if (isJelly)
-            return;
+        if (isJelly) return;
 
 
         isJelly = true;
-
-
-        Debug.Log(
-            gameObject.name +
-            " activated soft body!"
-        );
 
 
         // ========================================================
@@ -148,8 +131,7 @@ public class JellyBlock : MonoBehaviour
         {
             if (jellyRb != null)
             {
-                jellyRb.bodyType =
-                    RigidbodyType2D.Dynamic;
+                jellyRb.bodyType = RigidbodyType2D.Dynamic;
             }
         }
 
@@ -176,39 +158,17 @@ public class JellyBlock : MonoBehaviour
 
 
         // Convert velocity into 0-1 range
-        float damagePercent =
-            Mathf.InverseLerp(
-                fallDamageThreshold,
-                maxFallDamageVelocity,
-                impactVelocity
-            );
+        float damagePercent = Mathf.InverseLerp(fallDamageThreshold, maxFallDamageVelocity, impactVelocity);
 
 
-        float damage =
-            Mathf.Lerp(
-                0f,
-                maxFallDamage,
-                damagePercent
-            );
+        float damage = Mathf.Lerp(0f, maxFallDamage, damagePercent);
 
 
-        if (damage <= 0f)
-            return;
+        if (damage <= 0f) return;
 
 
         health.TakeDamage(damage);
     }
-
-
-    // ============================================================
-    // MANUAL ACTIVATION
-    // ============================================================
-
-   // public void ForceActivateSoftBody()
-    //{
-        //ActivateJelly(Vector2.zero);
-    //}
-
 
     // ============================================================
     // CHECK STATE

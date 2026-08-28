@@ -11,16 +11,7 @@ public class JellyBone : MonoBehaviour
 
     private void Awake()
     {
-        jellyDamage =
-            GetComponentInParent<JellyDamage>();
-
-
-        if (jellyDamage == null)
-        {
-            Debug.LogWarning(
-                "JellyBone could not find JellyDamage!"
-            );
-        }
+        jellyDamage = GetComponentInParent<JellyDamage>();
     }
 
 
@@ -36,24 +27,18 @@ public class JellyBone : MonoBehaviour
             return;
 
 
-        BlockBone blockBone =
-            collision.collider.GetComponent<BlockBone>();
+        BlockBone blockBone = collision.collider.GetComponent<BlockBone>();
 
 
-        if (blockBone == null)
-            return;
+        if (blockBone == null) return;
 
 
-        BlockHealth blockHealth =
-            blockBone.GetBlockHealth();
+        BlockHealth blockHealth = blockBone.GetBlockHealth();
 
 
-        if (blockHealth == null)
-            return;
+        if (blockHealth == null) return;
 
 
-        jellyDamage.TryDamageBlock(
-            blockHealth
-        );
+        jellyDamage.TryDamageBlock(blockHealth);
     }
 }

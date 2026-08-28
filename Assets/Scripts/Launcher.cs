@@ -210,41 +210,21 @@ public class Launcher : MonoBehaviour
 
         if (isMouseDown)
         {
-            Vector3 mousePosition =
-                Input.mousePosition;
+            Vector3 mousePosition = Input.mousePosition;
 
             mousePosition.z = 10f;
 
 
-            currentPosition =
-                Camera.main.ScreenToWorldPoint(
-                    mousePosition
-                );
+            currentPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
+            currentPosition = center.position + Vector3.ClampMagnitude(currentPosition - center.position, maxLength);
+
+            currentPosition = ClampBoundary(currentPosition);
+
+            MoveJelly(currentPosition);
 
 
-            currentPosition =
-                center.position +
-                Vector3.ClampMagnitude(
-                    currentPosition -
-                    center.position,
-                    maxLength
-                );
-
-
-            currentPosition =
-                ClampBoundary(
-                    currentPosition
-                );
-
-
-            MoveJelly(
-                currentPosition
-            );
-
-
-            SetStrips(
-                currentPosition
-            );
+            SetStrips(currentPosition);
 
 
             ShowTrajectory();
@@ -264,40 +244,22 @@ public class Launcher : MonoBehaviour
 
     void CreateJelly()
     {
-        if (JellyPrefabs == null ||
-            JellyPrefabs.Length == 0)
+        if (JellyPrefabs == null || JellyPrefabs.Length == 0)
         {
-            Debug.LogError(
-                "No Jelly Prefabs assigned!"
-            );
-
             return;
         }
 
 
-        GameObject selectedJelly =
-            JellyPrefabs[
-                Random.Range(
-                    0,
-                    JellyPrefabs.Length
-                )
-            ];
+        GameObject selectedJelly = JellyPrefabs[Random.Range(0, JellyPrefabs.Length)];
 
 
-        currentJelly =
-            Instantiate(
-                selectedJelly,
-                idlePosition.position,
-                Quaternion.identity
-            );
+        currentJelly = Instantiate(selectedJelly, idlePosition.position, Quaternion.identity);
 
 
-        jellyBodies =
-            currentJelly.GetComponentsInChildren<Rigidbody2D>();
+        jellyBodies = currentJelly.GetComponentsInChildren<Rigidbody2D>();
 
 
-        jellyColliders =
-            currentJelly.GetComponentsInChildren<Collider2D>();
+        jellyColliders = currentJelly.GetComponentsInChildren<Collider2D>();
 
 
         // Disable physics while aiming
@@ -319,31 +281,18 @@ public class Launcher : MonoBehaviour
     // MOVE JELLY
     // ============================================================
 
-    void MoveJelly(
-        Vector3 position
-    )
+    void MoveJelly(Vector3 position)
     {
-        Vector3 direction =
-            position -
-            center.position;
+        Vector3 direction = position - center.position;
 
 
-        Vector3 targetPosition =
-            position +
-            direction.normalized *
-            jellyPositionOffset;
+        Vector3 targetPosition = position + direction.normalized * jellyPositionOffset;
 
 
-        currentJelly.transform.position =
-            targetPosition;
+        currentJelly.transform.position = targetPosition;
 
 
-        currentJelly.transform.rotation =
-            Quaternion.Euler(
-                0f,
-                0f,
-                -direction.x * 15f
-            );
+        currentJelly.transform.rotation = Quaternion.Euler(0f, 0f, -direction.x * 15f);
     }
 
 
@@ -367,16 +316,11 @@ public class Launcher : MonoBehaviour
 
         if (GameManager.Instance != null)
         {
-            bool canUseJelly =
-                GameManager.Instance.UseJelly();
+            bool canUseJelly = GameManager.Instance.UseJelly();
 
 
             if (!canUseJelly)
             {
-                Debug.Log(
-                    "Cannot launch! No jellies remaining."
-                );
-
                 return;
             }
         }
@@ -462,13 +406,6 @@ public class Launcher : MonoBehaviour
             );
         }
 
-
-        Debug.Log(
-            "Shot Jelly: " +
-            currentJelly.name
-        );
-
-
         // ========================================================
         // CLEAR
         // ========================================================
@@ -508,11 +445,6 @@ public class Launcher : MonoBehaviour
         {
             waitingForFreshMousePress = false;
         }
-
-
-        Debug.Log(
-            "Slingshot unlocked."
-        );
     }
 
 

@@ -576,66 +576,30 @@ public class GameManager : MonoBehaviour
 
     private void CheckLevelComplete()
     {
-        if (currentLevel == null ||
-            currentLevel.levelObject == null)
+        if (currentLevel == null || currentLevel.levelObject == null)
         {
             return;
         }
 
-
-        // Find every BlockHealth object inside
-        // the currently active level.
-
-        BlockHealth[] obstacles =
-            currentLevel.levelObject
-                .GetComponentsInChildren<BlockHealth>(true);
-
-
-        // ========================================================
-        // NO BLOCKS LEFT
-        // ========================================================
-
-        if (obstacles.Length == 0)
-        {
-            Debug.Log(
-                "ALL OBJECTS DESTROYED! LEVEL COMPLETE!"
-            );
-
-
-            WinLevel();
-
-
-            return;
-        }
-
-
-        // ========================================================
-        // COUNT REMAINING BLOCKS
-        // ========================================================
+        // Find all BlockHealth components, including inactive ones.
+        BlockHealth[] obstacles = currentLevel.levelObject.GetComponentsInChildren<BlockHealth>(true);
 
         int remaining = 0;
 
-
         foreach (BlockHealth obstacle in obstacles)
         {
-            if (obstacle != null)
+            if (obstacle != null && obstacle.gameObject.activeInHierarchy)
             {
                 remaining++;
             }
         }
 
-
         // ========================================================
         // ALL BLOCKS DESTROYED
         // ========================================================
 
-        if (remaining == 0)
+        if (remaining <= 0)
         {
-            Debug.Log(
-                "ALL OBJECTS DESTROYED! LEVEL COMPLETE!"
-            );
-
-
             WinLevel();
         }
     }
